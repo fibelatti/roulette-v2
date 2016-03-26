@@ -2,8 +2,8 @@
   document.querySelector('a#draft').addEventListener('click', function(event){
     event.preventDefault()
 
-    let audio = document.querySelector('audio');
-    let button = document.querySelector('#draft');
+    var audio = document.querySelector('audio');
+    var button = document.querySelector('#draft');
 
     if ( audio.paused ) {
       $('audio').animate({volume: 1});
@@ -24,9 +24,9 @@
 }())
 
 function asyncLoop (iterations, func, callback) {
-  let index = 0;
-  let done = false;
-  let loop = {
+  var index = 0;
+  var done = false;
+  var loop = {
     next: function() {
       if (done) {
         return;
