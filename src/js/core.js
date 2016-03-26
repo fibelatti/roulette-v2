@@ -78,7 +78,7 @@ function populateDefaultOptions () {
 function fetchRouletteOptionsList (rouletteName) {
   $('#roulette-options-list').empty();
   
-  let roulette = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
+  var roulette = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
   
   _.forEach(roulette.options, function(value, key) {
     $('<a />', {
@@ -89,6 +89,8 @@ function fetchRouletteOptionsList (rouletteName) {
       click: function(){ $(this).toggleClass('active'); }
     }).appendTo($('#roulette-options-list'));
   });
+  
+  setPlaceholderName(rouletteName);
 }
 
 function showRoulettesModal () {
@@ -106,16 +108,16 @@ function showNewRouletteModal () {
 }
 
 function createRouletteImages () {
-  let activeOptions = $('.list-group').find('.active');
+  var activeOptions = $('.list-group').find('.active');
   
   asyncLoop(activeOptions.length, function(loop) {
-    let currentOption = activeOptions[loop.iteration()];
+    var currentOption = activeOptions[loop.iteration()];
     
     $('#img-generator-text').text(currentOption.text);
     
     html2canvas($('#img-generator'), {
       onrendered: function(canvas) {        
-        let imgSrc = canvas.toDataURL("image/png");
+        var imgSrc = canvas.toDataURL("image/png");
 
         $('<img />', {
           src: imgSrc,
@@ -132,21 +134,21 @@ function createRouletteImages () {
 }
 
 function checkSetupIsValid () {
-  let activeOptions = $('.list-group').find('.active');
+  var activeOptions = $('.list-group').find('.active');
   
   return activeOptions.length >= 2;
 }
 
 function createNewRoulette () {
-  let rouletteName    = $('#new-roulette-name').val();
-  let rouletteOptions = _.map(_.filter(_.split($('#new-roulette-options').val(), ','), function(item) { return _.trim(item) !== ""; }), function (item) { return _.trim(item); });
+  var rouletteName    = $('#new-roulette-name').val();
+  var rouletteOptions = _.map(_.filter(_.split($('#new-roulette-options').val(), ','), function(item) { return _.trim(item) !== ""; }), function (item) { return _.trim(item); });
   
   if (rouletteName.length === 0) {
     alert('A roleta precisa de um nome.');
   } else if (rouletteOptions.length < 2) {
     alert('A roleta precisa de no mínimo duas opções.');
   } else {
-    let newRoulette = {};
+    var newRoulette = {};
     
     newRoulette.name    = rouletteName;
     newRoulette.options = rouletteOptions;
@@ -166,9 +168,13 @@ function clearNewRouletteForm () {
   $('#new-roulette-options').val('')
 }
 
+function setPlaceholderName (rouletteName) {
+  $('#roulette-name').text(rouletteName);
+}
+
 function loadRoulettesFromCookie () {
   if ($.cookie("fibelatti-roulettes-data") !== undefined) {
-    let cookieData = JSON.parse($.cookie("fibelatti-roulettes-data"));
+    var cookieData = JSON.parse($.cookie("fibelatti-roulettes-data"));
     
     SESSION_DATA = cookieData;
   }
