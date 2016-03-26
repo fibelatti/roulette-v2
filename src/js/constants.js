@@ -1,8 +1,8 @@
-let SESSION_DATA = {
+var SESSION_DATA = {
   "roulettes":[]
 };
 
-let ROULETTE_OPTION = {
+var ROULETTE_OPTION = {
   speed : 6,
   duration : 30,
   stopImageNumber : -1,
