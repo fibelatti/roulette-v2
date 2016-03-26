@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="version"        content="2.0.1" >
+    <meta name="version"        content="2.1.0" >
     <meta name="viewport"       content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
     <meta name="author"         content="Filipe Belatti" />
     <meta name="description"    content="Making decisions easier" />
@@ -122,6 +122,68 @@
         </div>
       </div>
       
+      <!-- Import/Export Roulettes Modal --> 
+      <div class="modal fade" id="impexp-roulettes-modal" tabindex="-1" role="dialog" aria-labelledby="impexp-roulettes-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="impexp-roulettes-modal-label">Importar/Exportar (json)</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row row-modal">
+                <div class="col">
+                  <span>Suas roletas são salvas nos cookies do navegador, podendo ser importadas e exportadas no formato json.</span>
+                </div>
+              </div>
+
+              <div class="row row-modal">
+                <div class="col">
+                  <button id="export-roulette-btn" type="button" class="btn btn-default btn-sm">Exportar Roletas</button>
+                </div>
+              </div>
+
+              <div class="row row-modal">
+                <div class="col">
+                  <span>Exemplo</span>
+                  <figure class="highlight">
+                    <pre>
+                      <code>
+{
+  "roulettes":[
+    {
+      "name":"Exemplo 1",
+      "options":["1","2","3","4","5"]
+    },
+    {
+      "name":"Exemplo 2",
+      "options":["A","B","C","D","E"]
+    }
+  ]
+}
+                      </code>
+                    </pre>
+                  </figure>
+                </div>
+              </div>
+
+              <div class="row row-modal">
+                <div class="col">
+                  <div class="input-group">
+                    <input type="file" class="form-control" id="json-file">
+                    <span class="input-group-btn">
+                      <button id="import-roulette-btn" class="btn btn-default" type="button">Importar</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button id="impexp-roulettes-modal-cancel" type="button" class="btn btn-first">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       <!-- Page Content -->
       <div class="row row-main-content">
         <div class="col-xs-12">
@@ -145,7 +207,10 @@
 
       <div class="row row-main-content">
         <div class="col-xs-12">
-          <p><a class="btn btn-first btn-lg" href="" id="draft" role="button">Roda a Roda!</a></p>
+          <p><a class="btn btn-first btn-lg btn-main-content" href="" id="draft" role="button">Roda a Roda!</a></p>
+        </div>
+        <div class="col-xs-12">
+          <p><a class="btn btn-second btn-lg btn-main-content" href="" id="choose-another-roulette" role="button">Escolher Roleta</a></p>
         </div>
       </div>
     </div>
