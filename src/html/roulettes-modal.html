@@ -1,0 +1,47 @@
+<!-- Roulettes Modal -->
+<div class="modal fade" id="roulettes-modal" tabindex="-1" role="dialog" aria-labelledby="roulettes-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="roulettes-modal-label">Prepare a Roleta</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row row-modal">
+          <div class="col">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle btn-dropdown-roulette" type="button" id="dropdown-roulette-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Escolha a Roleta
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" id="dropdown-roulette-list" aria-labelledby="dropdown-roleta-selector">
+                <!-- this is populated by utils.populateRoulette() -->
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row row-modal">
+          <div class="col">
+            <button id="include-all-btn" type="button" class="btn btn-default btn-sm">Incluir Todos</button>
+            <button id="remove-all-btn" type="button" class="btn btn-default btn-sm">Remover Todos</button>
+          </div>
+        </div>
+
+        <div class="row row-modal">
+          <div class="col">
+            <table class="table">
+              <tbody>
+                <div class="list-group" id="roulette-options-list">
+                  <!-- this is populated by utils.fetchRouletteOptionsList() -->
+                </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="roulettes-modal-ok" type="button" class="btn btn-first">Pronto!</button>
+      </div>
+    </div>
+  </div>
+</div>
