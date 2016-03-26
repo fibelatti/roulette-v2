@@ -4,6 +4,7 @@
 
     var audio = document.querySelector('audio');
     var button = document.querySelector('#draft');
+    var audioDurantion = $('#roulette-options-list').children().length * 1000;
 
     if ( audio.paused ) {
       $('audio').animate({volume: 1});
@@ -13,7 +14,7 @@
       $('div.roulette').roulette('start');	
     } else {
       button.innerHTML = 'Aguarde...';
-      $('audio').animate({volume: 0}, 21000, function() {
+      $('audio').animate({volume: 0}, audioDurantion, function() {
         audio.pause();
         button.innerHTML = 'Roda a Roda!';
       });
