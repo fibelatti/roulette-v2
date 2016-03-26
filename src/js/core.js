@@ -98,6 +98,7 @@ function showRoulettesModal () {
 function showImportExportModal () {
   $('#roulettes-modal').modal('hide');
   $('#impexp-roulettes-modal').modal('show');
+  loadExportRoulettesDataURL();
 }
 
 function showNewRouletteModal () {
@@ -182,13 +183,13 @@ function saveToCookie () {
   $.cookie("fibelatti-roulettes-data", JSON.stringify(SESSION_DATA), { expires: 365 });
 }
 
-$('#export-roulette-btn').on('click', function () {
-  exportRoulettesData();
-});
-
-function exportRoulettesData () {
-  var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(SESSION_DATA));
-  window.open(url, '_blank');
+function loadExportRoulettesDataURL () {  
+  var json = JSON.stringify(SESSION_DATA);
+  var blob = new Blob([json], {type: "application/json"});
+  var url  = URL.createObjectURL(blob);
+  
+  $('#export-roulette-btn').attr('href', url);
+  $('#export-roulette-btn').attr('download', 'roulettes.json');
 }
 
 $('#import-roulette-btn').on('click', function () {
