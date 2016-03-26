@@ -66,13 +66,11 @@ function populateDefaultOptions () {
     click: function(){ showNewRouletteModal(); }
   }).wrap('<li />').parent().appendTo($('#dropdown-roulette-list'));
 
-  /*
   $('<a />', {
     href  : '#',
     text  : 'Importar/Exportar roletas (json)',
     click: function(){ showImportExportModal(); }
   }).wrap('<li />').parent().appendTo($('#dropdown-roulette-list'));
-  */
 }
 
 function fetchRouletteOptionsList (rouletteName) {
@@ -183,3 +181,45 @@ function loadRoulettesFromCookie () {
 function saveToCookie () {
   $.cookie("fibelatti-roulettes-data", JSON.stringify(SESSION_DATA), { expires: 365 });
 }
+
+$('#export-roulette-btn').on('click', function () {
+  exportRoulettesData();
+});
+
+function exportRoulettesData () {
+  var url = 'data:text/json;charset=utf8,' + encodeURIComponent(JSON.stringify(SESSION_DATA));
+  window.open(url, '_blank');
+}
+
+$('#import-roulette-btn').on('click', function () {
+  importRoulettesData();
+});
+
+function importRoulettesData () {
+  var selectedFile = $('#json-file').get(0).files[0];
+
+  if (selectedFile && selectedFile.type === 'application/json') {
+    var reader = new FileReader();
+    reader.readAsText(selectedFile, "UTF-8");
+    reader.onload = function (evt) {
+      var importedRoulettes = JSON.parse(evt.target.result);
+      
+      _.forEach(importedRoulettes.roulettes, function(value) {
+        SESSION_DATA.roulettes.push(value);
+      });
+
+      saveToCookie();
+      populateRoulettes();
+      
+      $('#impexp-roulettes-modal').modal('hide');
+      $('#roulettes-modal').modal('show');
+    }
+  } else {
+    alert('Selecione um arquivo .json');
+  }
+}
+
+$('#choose-another-roulette').on('click', function () {
+  $('div.roulette').roulette('stop');	
+  $('#roulettes-modal').modal('show');
+});
