@@ -1,13 +1,14 @@
 <!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8">
-    <meta name="version" content="1.0.0" >
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
-    <meta name="author" content="Filipe Belatti" />
-    <meta name="description" content="Making decisions easier" />
-    <meta name="keywords" content="roullete" />
-    <meta name="Resource-type" content="Document" />
+    <meta name="version"        content="1.0.0" >
+    <meta name="viewport"       content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+    <meta name="author"         content="Filipe Belatti" />
+    <meta name="description"    content="Making decisions easier" />
+    <meta name="keywords"       content="roullete" />
+    <meta name="Resource-type"  content="Document" />
+    <meta name="theme-color"    content="#2b2b2b">
 
     <title>Roleta!</title>
 
@@ -15,20 +16,18 @@
     <link href="src/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- Custom styles for this template -->
-    <link href="src/assets/css/index.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Work+Sans:500">
+    <link type="text/css" rel="stylesheet" href="src/assets/css/index.css">
     
     <!-- jQuery -->
     <script type="text/javascript" src="src/js/third-party/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="src/js/third-party/jquery.cookie.js"></script>
     
     <!-- Other js files -->
     <script type="text/javascript" src="src/assets/bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript" src="src/js/roulette.js"></script>
-    
-    <script type="text/javascript">
-      $(document).ready(function() {
-        $('#myModal').modal('show');
-      });
-    </script>
+    <script type="text/javascript" src="src/js/third-party/roulette.js"></script>
+    <script type="text/javascript" src="src/js/third-party/html2canvas.js"></script>
+    <script type="text/javascript" src="src/js/third-party/lodash.js"></script>
   </head>
   <body>
     <audio preload="auto" loop="true">
@@ -38,97 +37,126 @@
     </audio>
     
     <div>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <!-- Roulettes Modal -->
+      <div class="modal fade" id="roulettes-modal" tabindex="-1" role="dialog" aria-labelledby="roulettes-modal-label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h4 class="modal-title" id="myModalLabel">Escolha as opções</h4>
+              <h4 class="modal-title" id="roulettes-modal-label">Prepare a Roleta</h4>
             </div>
             <div class="modal-body">
-              <div>
-                <button id="include-all-btn" type="button" class="btn btn-default">Incluir Todos</button>
-                <button id="remove-all-btn" type="button" class="btn btn-default">Remover Todos</button>
+              <div class="row row-modal">
+                <div class="col">
+                  <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle btn-dropdown-roulette" type="button" id="dropdown-roulette-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      Escolha a Roleta
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="dropdown-roulette-list" aria-labelledby="dropdown-roleta-selector">
+                      <!-- this is populated by utils.populateRoulette() -->
+                    </ul>
+                  </div>
+                </div>
               </div>
-              <br>
-              <div>
-                <table class="table">
-                  <tbody id="list-itens">
-                    <div class="list-group">
-                      <a id="opt-204" href="#" class="list-group-item active">204</a>
-                      <a id="opt-alemao" href="#" class="list-group-item active">Alemão</a>
-                      <a id="opt-croasonho" href="#" class="list-group-item active">Croasonho</a>
-                      <a id="opt-dominos" href="#" class="list-group-item active">Domino's</a>
-                      <a id="opt-habbibs" href="#" class="list-group-item active">Habbib's</a>
-                      <a id="opt-jaber" href="#" class="list-group-item active">Jaber</a>
-                      <a id="opt-jazz" href="#" class="list-group-item active">Jazz</a>
-                      <a id="opt-massinha" href="#" class="list-group-item active">Massinha</a>
-                      <a id="opt-mineiro" href="#" class="list-group-item active">Mineiro</a>
-                      <a id="opt-padariaar" href="#" class="list-group-item active">Padaria Ana Rosa</a>
-                      <a id="opt-passarinho" href="#" class="list-group-item active">Passarinho</a>
-                      <a id="opt-pastel" href="#" class="list-group-item active">Pastel</a>
-                      <a id="opt-patiopaulista" href="#" class="list-group-item active">Pátio Paulista</a>
-                      <a id="opt-pf" href="#" class="list-group-item active">PF</a>
-                      <a id="opt-primedog" href="#" class="list-group-item active">Prime Dog</a>
-                      <a id="opt-shoppinho" href="#" class="list-group-item active">Shoppinho</a>
-                      <a id="opt-temakiya" href="#" class="list-group-item active">TemakiYa</a>
-                      <a id="opt-trikilo" href="#" class="list-group-item active">Trikilo</a>
-                      <a id="opt-premium" href="#" class="list-group-item active">Almoço Premium</a>
-                    </div>
-                  </tbody>
-                </table>
+
+              <div class="row row-modal">
+                <div class="col">
+                  <button id="include-all-btn" type="button" class="btn btn-default btn-sm">Incluir Todos</button>
+                  <button id="remove-all-btn" type="button" class="btn btn-default btn-sm">Remover Todos</button>
+                </div>
+              </div>
+
+              <div class="row row-modal">
+                <div class="col">
+                  <table class="table">
+                    <tbody>
+                      <div class="list-group" id="roulette-options-list">
+                        <!-- this is populated by utils.fetchRouletteOptionsList() -->
+                      </div>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-            
             <div class="modal-footer">
-              <button id="modal-ok" type="button" class="btn btn-primary" data-dismiss="modal">Pronto!</button>
+              <button id="roulettes-modal-ok" type="button" class="btn btn-first">Pronto!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- New Roulette Modal -->
+      <div class="modal fade" id="new-roulette-modal" tabindex="-1" role="dialog" aria-labelledby="new-roulette-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="new-roulette-modal-label">Nova Roleta</h4>
+            </div>
+            <div class="modal-body">
+
+              <div class="row row-modal">
+                <div class="col">
+                  <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                      <label class="col-xs-3 control-label">Nome:</label>
+                      <div class="col-xs-9">
+                        <input id="new-roulette-name" class="form-control" type="text" value="">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-xs-3 control-label">Opções:</label>
+                      <div class="col-xs-9">
+                        <textarea id="new-roulette-options" class="form-control" type="text" value="" placeholder="Digite as opções separadas por vírgula"></textarea>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button id="new-roulette-modal-cancel" type="button" class="btn btn-second">Cancelar :(</button>
+              <button id="new-roulette-modal-ok" type="button" class="btn btn-first">Criar!</button>
             </div>
           </div>
         </div>
       </div>
       
       <!-- Page Content -->
-      <div>
-        <h1 class="header">Roleta do Almoço</h1>
-      </div>
-      
-      <div class="row">
-        <div class="col-md-3">
+      <div class="row row-main-content">
+        <div class="col-xs-12">
+          <h1>Roleta</h1>
+          <h2 id="roulette-name">Placeholder</h2>
         </div>
-        <div class="col-md-6">
+      </div>
+
+      <div class="row row-main-content">
+        <div class="col-xs-12">
           <div class="roulette_container" >
-            <div id="opt-container" class="roulette" style="display:none;">
-              <img id="img-204" src="src/assets/includes/images/204.png"/>
-              <img id="img-alemao" src="src/assets/includes/images/alemao.png"/>
-              <img id="img-croasonho" src="src/assets/includes/images/croasonho.png"/>
-              <img id="img-jaber" src="src/assets/includes/images/jaber.png"/>
-              <img id="img-primedog" src="src/assets/includes/images/primedog.png"/>
-              <img id="img-mineiro" src="src/assets/includes/images/mineiro.png"/>
-              <img id="img-passarinho" src="src/assets/includes/images/passarinho.png"/>
-              <img id="img-patiopaulista" src="src/assets/includes/images/patiopaulista.png"/>
-              <img id="img-jazz" src="src/assets/includes/images/jazz.png"/>
-              <img id="img-massinha" src="src/assets/includes/images/massinha.png"/>
-              <img id="img-trikilo" src="src/assets/includes/images/trikilo.png"/>
-              <img id="img-dominos" src="src/assets/includes/images/dominos.png"/>
-              <img id="img-habbibs" src="src/assets/includes/images/habbibs.png"/>
-              <img id="img-pastel" src="src/assets/includes/images/pastel.png"/>
-              <img id="img-shoppinho" src="src/assets/includes/images/shoppinho.png"/>
-              <img id="img-padariaar" src="src/assets/includes/images/padariaar.png"/>
-              <img id="img-pf" src="src/assets/includes/images/pf.png"/>
-              <img id="img-temakiya" src="src/assets/includes/images/temakiya.png"/>
-              <img id="img-premium" src="src/assets/includes/images/premium.png"/>
+            <div class="roulette" id="opt-container" style="display:none;">
+            </div>
+            <div class="roulette_container" id="img-generator">
+              <div class="long-shadow" id="img-generator-text">
+              </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <br><br><br>
-          
-          <div>
-            <p><a class="btn btn-lg btn-second" href="" id="draft" role="button">Roda a Roda!</a></p>
-          </div>
+      <div class="row row-main-content">
+        <div class="col-xs-12">
+          <p><a class="btn btn-first btn-lg" href="" id="draft" role="button">Roda a Roda!</a></p>
         </div>
       </div>
     </div>
     
-    <script type="text/javascript" src="src/js/util.js"></script>
+    <script type="text/javascript" src="src/js/constants.js"></script>
+    <script type="text/javascript" src="src/js/utils.js"></script>
+    <script type="text/javascript" src="src/js/core.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        init();
+      });
+    </script>
   </body>
 </html>
