@@ -100,6 +100,9 @@ textarea {
   text-align: left;
   font-size: 12px;
 }
+.highlight ::selection {
+  background: rgb(0, 125, 210);
+}
 
 .long-shadow {
   margin: auto;

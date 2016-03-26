@@ -206,9 +206,16 @@ function importRoulettesData () {
       var importedRoulettes = JSON.parse(evt.target.result);
       
       if (tv4.validate(importedRoulettes, ROULETTES_JSON_SCHEMA)) {
-        _.forEach(importedRoulettes.roulettes, function(value) {
-          SESSION_DATA.roulettes.push(value);
-        });
+        
+        var shouldReplace = $('#import-replace-check').is(':checked');
+        
+        if (shouldReplace) {
+          SESSION_DATA = importedRoulettes;
+        } else {
+          _.forEach(importedRoulettes.roulettes, function(value) {
+            SESSION_DATA.roulettes.push(value);
+          });
+        }
 
         saveToCookie();
         populateRoulettes();

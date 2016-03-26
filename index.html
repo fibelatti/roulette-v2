@@ -133,22 +133,41 @@
             <div class="modal-body">
               <div class="row row-modal">
                 <div class="col">
-                  <span>Suas roletas são salvas nos cookies do navegador, podendo ser importadas e exportadas no formato json.</span>
+                  <span>Suas roletas são salvas nos cookies do navegador, podendo ser exportadas e importadas no formato json.</span>
                 </div>
               </div>
+              
+              <hr />
 
               <div class="row row-modal">
                 <div class="col">
                   <a id="export-roulette-btn" href="#" class="btn btn-default btn-sm" role="button">Exportar Roletas</a>
                 </div>
               </div>
+              
+              <hr />
+              
+              <div class="row row-modal">
+                <div class="col">
+                  <div class="input-group">
+                    <input type="file" accept=".json" class="form-control" id="json-file">
+                    <span class="input-group-btn">
+                      <button id="import-roulette-btn" class="btn btn-default" type="button">Importar</button>
+                    </span>
+                  </div>
+                  <div class="checkbox">
+                    <label><input type="checkbox" id="import-replace-check">Substituir roletas existentes</label>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
 
               <div class="row row-modal">
                 <div class="col">
                   <span>Exemplo</span>
                   <figure class="highlight">
-                    <pre>
-                      <code>
+<pre>
 {
   "roulettes":[
     {
@@ -161,22 +180,11 @@
     }
   ]
 }
-                      </code>
-                    </pre>
+</pre>
                   </figure>
                 </div>
               </div>
 
-              <div class="row row-modal">
-                <div class="col">
-                  <div class="input-group">
-                    <input type="file" accept=".json" class="form-control" id="json-file">
-                    <span class="input-group-btn">
-                      <button id="import-roulette-btn" class="btn btn-default" type="button">Importar</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="modal-footer">
               <button id="impexp-roulettes-modal-cancel" type="button" class="btn btn-first">Cancelar</button>
