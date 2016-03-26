@@ -16,3 +16,35 @@ var ROULETTE_OPTION = {
     console.log('stop');
   }
 };
+
+var ROULETTES_JSON_SCHEMA = {
+  "type": "object",
+  "properties": {
+    "roulettes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "options"
+        ]
+      }
+    }
+  },
+  "required": [
+    "roulettes"
+  ]
+}

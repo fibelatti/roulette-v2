@@ -199,21 +199,25 @@ $('#import-roulette-btn').on('click', function () {
 function importRoulettesData () {
   var selectedFile = $('#json-file').get(0).files[0];
 
-  if (selectedFile && selectedFile.type === 'application/json') {
+  if (selectedFile) {
     var reader = new FileReader();
     reader.readAsText(selectedFile, "UTF-8");
     reader.onload = function (evt) {
       var importedRoulettes = JSON.parse(evt.target.result);
       
-      _.forEach(importedRoulettes.roulettes, function(value) {
-        SESSION_DATA.roulettes.push(value);
-      });
+      if (tv4.validate(importedRoulettes, ROULETTES_JSON_SCHEMA)) {
+        _.forEach(importedRoulettes.roulettes, function(value) {
+          SESSION_DATA.roulettes.push(value);
+        });
 
-      saveToCookie();
-      populateRoulettes();
-      
-      $('#impexp-roulettes-modal').modal('hide');
-      $('#roulettes-modal').modal('show');
+        saveToCookie();
+        populateRoulettes();
+
+        $('#impexp-roulettes-modal').modal('hide');
+        $('#roulettes-modal').modal('show');
+      } else {
+        alert('Selecione um arquivo .json válido');
+      }
     }
   } else {
     alert('Selecione um arquivo .json');
