@@ -46,6 +46,9 @@ body{
 .btn-main-content{
   width: 33.0vmax;
 }
+.btn-modal{
+  width: 22.0vmax;
+}
 .btn-dropdown-roulette{
   width: 100%;
 }
