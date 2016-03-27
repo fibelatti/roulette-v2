@@ -170,11 +170,17 @@ function saveRoulette () {
     
     saveToCookie();
     populateRoulettes();
+    clearCurrentRoulette();
     clearNewRouletteForm();
     
     $('#new-roulette-modal').modal('hide');
     $('#roulettes-modal').modal('show');
   }
+}
+
+function clearCurrentRoulette () {
+  $('#roulette-options-list').empty();
+  CURRENT_ROULETE = {};
 }
 
 function clearNewRouletteForm () {
