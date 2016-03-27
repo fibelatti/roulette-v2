@@ -1,3 +1,4 @@
+// Button events
 $('#include-all-btn').on('click', function () {
   $('.list-group-item').addClass('active');
 });
@@ -6,20 +7,32 @@ $('#remove-all-btn').on('click', function () {
   $('.list-group-item').removeClass('active');
 });
 
+$('#edit-roulette').on('click', function () {
+  editRoulette();
+});
+
+$('#choose-another-roulette').on('click', function () {
+  $('div.roulette').roulette('stop');	
+  $('#roulettes-modal').modal('show');
+});
+
+$('#import-roulette-btn').on('click', function () {
+  importRoulettesData();
+});
+
+// Modal events
 $('#roulettes-modal-ok').on('click', function () {
   if (checkSetupIsValid()) {
     createRouletteImages();
+  } else if (CURRENT_ROULETTE.name) {
+    alert('Escolha a roleta');
   } else {
-    alert('Escolha pelo menos 2 opções!');
+    alert('Escolha pelo menos 2 opções');
   }
 });
 
 $('#new-roulette-modal-ok').on('click', function () {
   saveRoulette();
-});
-
-$('#edit-roulette').on('click', function () {
-  editRoulette();
 });
 
 $('#new-roulette-modal-cancel').on('click', function () {
@@ -33,12 +46,14 @@ $('#impexp-roulettes-modal-cancel').on('click', function () {
   $('#roulettes-modal').modal('show');
 });
 
+// General functions
 function init () {
-  populateRoulettes();
+  populateRouletteDropdown();
   showRoulettesModal();
 }
 
-function populateRoulettes () {
+// Roulette functions
+function populateRouletteDropdown () {
   loadRoulettesFromCookie();
   $('#dropdown-roulette-list').empty()
   
@@ -51,14 +66,14 @@ function populateRoulettes () {
     $('<a />', {
       href  : '#',
       text  : value.name,
-      click: function(){ fetchRouletteOptionsList(this.text); }
+      click: function () { fetchRouletteOptionsList(this.text); }
     }).wrap('<li />').parent().appendTo($('#dropdown-roulette-list'));
   });
   
-  populateDefaultOptions();
+  populateDropdownMenus();
 }
 
-function populateDefaultOptions () {
+function populateDropdownMenus () {
   $('<li />', {
     role  : 'separator',
     class : 'divider' 
@@ -97,21 +112,6 @@ function fetchRouletteOptionsList (rouletteName) {
   setPlaceholderName(rouletteName);
 }
 
-function showRoulettesModal () {
-  $('#roulettes-modal').modal('show');
-}
-
-function showImportExportModal () {
-  $('#roulettes-modal').modal('hide');
-  $('#impexp-roulettes-modal').modal('show');
-  loadExportRoulettesDataURL();
-}
-
-function showNewRouletteModal () {
-  $('#roulettes-modal').modal('hide');
-  $('#new-roulette-modal').modal('show');
-}
-
 function createRouletteImages () {
   var activeOptions = $('.list-group').find('.active');
   
@@ -138,12 +138,6 @@ function createRouletteImages () {
   );
 }
 
-function checkSetupIsValid () {
-  var activeOptions = $('.list-group').find('.active');
-  
-  return activeOptions.length >= 2;
-}
-
 function saveRoulette () {
   var rouletteName    = $('#new-roulette-name').val();
   var rouletteOptions = _.map(_.filter(_.split($('#new-roulette-options').val(), ','), function(item) { return _.trim(item) !== ""; }), function (item) { return _.trim(item); });
@@ -154,7 +148,6 @@ function saveRoulette () {
     alert('A roleta precisa de no mínimo duas opções');
   } else {
     var existingRoulette = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
-    console.log(existingRoulette);
     
     if (existingRoulette) {
       var idx = _.findIndex(SESSION_DATA.roulettes, function(o) { return o.name === existingRoulette.name; });
@@ -171,54 +164,14 @@ function saveRoulette () {
     }
     
     saveToCookie();
-    populateRoulettes();
-    clearCurrentRoulette();
     clearNewRouletteForm();
+    resetRouletteDropdown();
+    populateRoulettes();
     
     $('#new-roulette-modal').modal('hide');
     $('#roulettes-modal').modal('show');
   }
 }
-
-function clearCurrentRoulette () {
-  resetRouletteDropdownText();
-  $('#roulette-options-list').empty();
-  CURRENT_ROULETTE = {};
-}
-
-function clearNewRouletteForm () {
-  $('#new-roulette-name').val('');
-  $('#new-roulette-options').val('')
-}
-
-function setPlaceholderName (rouletteName) {
-  $('#roulette-name').text(rouletteName);
-}
-
-function loadRoulettesFromCookie () {
-  if ($.cookie("fibelatti-roulettes-data") !== undefined) {
-    var cookieData = JSON.parse($.cookie("fibelatti-roulettes-data"));
-    
-    SESSION_DATA = cookieData;
-  }
-}
-
-function saveToCookie () {
-  $.cookie("fibelatti-roulettes-data", JSON.stringify(SESSION_DATA), { expires: 365 });
-}
-
-function loadExportRoulettesDataURL () {  
-  var json = JSON.stringify(SESSION_DATA);
-  var blob = new Blob([json], {type: "application/json"});
-  var url  = URL.createObjectURL(blob);
-  
-  $('#export-roulette-btn').attr('href', url);
-  $('#export-roulette-btn').attr('download', 'roulettes.json');
-}
-
-$('#import-roulette-btn').on('click', function () {
-  importRoulettesData();
-});
 
 function importRoulettesData () {
   var selectedFile = $('#json-file').get(0).files[0];
@@ -255,11 +208,6 @@ function importRoulettesData () {
   }
 }
 
-$('#choose-another-roulette').on('click', function () {
-  $('div.roulette').roulette('stop');	
-  $('#roulettes-modal').modal('show');
-});
-
 function editRoulette () {
   if (CURRENT_ROULETTE.name) {
     $('#new-roulette-name').val(CURRENT_ROULETTE.name);
@@ -271,6 +219,57 @@ function editRoulette () {
   }
 }
 
-function resetRouletteDropdownText () {
+function loadExportRoulettesDataURL () {  
+  var json = JSON.stringify(SESSION_DATA);
+  var blob = new Blob([json], {type: "application/json"});
+  var url  = URL.createObjectURL(blob);
+  
+  $('#export-roulette-btn').attr('href', url);
+  $('#export-roulette-btn').attr('download', 'roulettes.json');
+}
+
+// Modal functions
+function showRoulettesModal () {
+  $('#roulettes-modal').modal('show');
+}
+
+function showImportExportModal () {
+  $('#roulettes-modal').modal('hide');
+  $('#impexp-roulettes-modal').modal('show');
+  loadExportRoulettesDataURL();
+}
+
+function showNewRouletteModal () {
+  $('#roulettes-modal').modal('hide');
+  $('#new-roulette-modal').modal('show');
+}
+
+// Validation functions
+function checkSetupIsValid () {
+  return $('.list-group').find('.active').length >= 2;
+}
+
+// Cleaning functions
+function clearNewRouletteForm () {
+  $('#new-roulette-name').val('');
+  $('#new-roulette-options').val('')
+}
+
+function resetRouletteDropdown () {
+  $('#roulette-options-list').empty();
   $('#dropdown-roulette-selector').html('Escolha a Roleta&nbsp<span class="caret"></span>');
+  CURRENT_ROULETTE = {};
+}
+
+function setPlaceholderName (rouletteName) {
+  $('#roulette-name').text(rouletteName);
+}
+
+// Cookie functions
+function loadRoulettesFromCookie () { 
+  if ($.cookie("fibelatti-roulettes-data") !== undefined) SESSION_DATA = JSON.parse($.cookie("fibelatti-roulettes-data"));
+}
+
+function saveToCookie () {
+  $.cookie("fibelatti-roulettes-data", JSON.stringify(SESSION_DATA), { expires: 365 });
 }
