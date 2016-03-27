@@ -46,6 +46,9 @@ body{
 .btn-main-content{
   width: 33.0vmax;
 }
+.btn-modal{
+  width: 21.0vmax;
+}
 .btn-dropdown-roulette{
   width: 100%;
 }
@@ -99,6 +102,9 @@ textarea {
 .highlight{
   text-align: left;
   font-size: 12px;
+}
+.highlight ::selection {
+  background: rgb(0, 125, 210);
 }
 
 .long-shadow {
