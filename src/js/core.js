@@ -78,6 +78,8 @@ function populateDefaultOptions () {
 }
 
 function fetchRouletteOptionsList (rouletteName) {
+  $('#dropdown-roulette-selector').html(rouletteName + '&nbsp<span class="caret"></span>');
+  
   $('#roulette-options-list').empty();
   
   CURRENT_ROULETE = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
@@ -179,6 +181,7 @@ function saveRoulette () {
 }
 
 function clearCurrentRoulette () {
+  resetRouletteDropdownText();
   $('#roulette-options-list').empty();
   CURRENT_ROULETE = {};
 }
@@ -266,4 +269,8 @@ function editRoulette () {
   } else {
     alert('Escolha uma roleta para editar'); 
   }
+}
+
+function resetRouletteDropdownText () {
+  $('#dropdown-roulette-selector').html('Escolha a Roleta&nbsp<span class="caret"></span>');
 }
