@@ -15,7 +15,11 @@ $('#roulettes-modal-ok').on('click', function () {
 });
 
 $('#new-roulette-modal-ok').on('click', function () {
-  createNewRoulette();
+  saveRoulette();
+});
+
+$('#edit-roulette').on('click', function () {
+  editRoulette();
 });
 
 $('#new-roulette-modal-cancel').on('click', function () {
@@ -76,9 +80,9 @@ function populateDefaultOptions () {
 function fetchRouletteOptionsList (rouletteName) {
   $('#roulette-options-list').empty();
   
-  var roulette = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
+  CURRENT_ROULETE = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
   
-  _.forEach(roulette.options, function(value, key) {
+  _.forEach(CURRENT_ROULETE.options, function(value, key) {
     $('<a />', {
       id    : 'opt-' + key,
       href  : '#',
@@ -138,25 +142,36 @@ function checkSetupIsValid () {
   return activeOptions.length >= 2;
 }
 
-function createNewRoulette () {
+function saveRoulette () {
   var rouletteName    = $('#new-roulette-name').val();
   var rouletteOptions = _.map(_.filter(_.split($('#new-roulette-options').val(), ','), function(item) { return _.trim(item) !== ""; }), function (item) { return _.trim(item); });
   
   if (rouletteName.length === 0) {
-    alert('A roleta precisa de um nome.');
+    alert('A roleta precisa de um nome');
   } else if (rouletteOptions.length < 2) {
-    alert('A roleta precisa de no mínimo duas opções.');
+    alert('A roleta precisa de no mínimo duas opções');
   } else {
-    var newRoulette = {};
+    var existingRoulette = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
+    console.log(existingRoulette);
     
-    newRoulette.name    = rouletteName;
-    newRoulette.options = rouletteOptions;
+    if (existingRoulette) {
+      var idx = _.findIndex(SESSION_DATA.roulettes, function(o) { return o.name === existingRoulette.name; });
+      
+      SESSION_DATA.roulettes[idx].name    = rouletteName;
+      SESSION_DATA.roulettes[idx].options = rouletteOptions;
+    } else {
+      var newRoulette = {};
     
-    SESSION_DATA.roulettes.push(newRoulette);
+      newRoulette.name    = rouletteName;
+      newRoulette.options = rouletteOptions;
+
+      SESSION_DATA.roulettes.push(newRoulette);
+    }
+    
     saveToCookie();
-    
     populateRoulettes();
     clearNewRouletteForm();
+    
     $('#new-roulette-modal').modal('hide');
     $('#roulettes-modal').modal('show');
   }
@@ -235,3 +250,14 @@ $('#choose-another-roulette').on('click', function () {
   $('div.roulette').roulette('stop');	
   $('#roulettes-modal').modal('show');
 });
+
+function editRoulette () {
+  if (CURRENT_ROULETE.name) {
+    $('#new-roulette-name').val(CURRENT_ROULETE.name);
+    $('#new-roulette-options').val(CURRENT_ROULETE.options); 
+    
+    showNewRouletteModal();
+  } else {
+    alert('Escolha uma roleta para editar'); 
+  }
+}
