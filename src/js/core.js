@@ -166,7 +166,7 @@ function saveRoulette () {
     saveToCookie();
     clearNewRouletteForm();
     resetRouletteDropdown();
-    populateRoulettes();
+    populateRouletteDropdown();
     
     $('#new-roulette-modal').modal('hide');
     $('#roulettes-modal').modal('show');
@@ -195,7 +195,7 @@ function importRoulettesData () {
         }
 
         saveToCookie();
-        populateRoulettes();
+        populateRouletteDropdown();
 
         $('#impexp-roulettes-modal').modal('hide');
         $('#roulettes-modal').modal('show');
