@@ -1,4 +1,4 @@
-var CURRENT_ROULETE = {};
+var CURRENT_ROULETTE = {};
 
 var SESSION_DATA = {
   "roulettes":[]

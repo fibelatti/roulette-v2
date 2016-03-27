@@ -82,9 +82,9 @@ function fetchRouletteOptionsList (rouletteName) {
   
   $('#roulette-options-list').empty();
   
-  CURRENT_ROULETE = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
+  CURRENT_ROULETTE = _.find(SESSION_DATA.roulettes, function(o) { return o.name === rouletteName; });
   
-  _.forEach(CURRENT_ROULETE.options, function(value, key) {
+  _.forEach(CURRENT_ROULETTE.options, function(value, key) {
     $('<a />', {
       id    : 'opt-' + key,
       href  : '#',
@@ -183,7 +183,7 @@ function saveRoulette () {
 function clearCurrentRoulette () {
   resetRouletteDropdownText();
   $('#roulette-options-list').empty();
-  CURRENT_ROULETE = {};
+  CURRENT_ROULETTE = {};
 }
 
 function clearNewRouletteForm () {
@@ -261,9 +261,9 @@ $('#choose-another-roulette').on('click', function () {
 });
 
 function editRoulette () {
-  if (CURRENT_ROULETE.name) {
-    $('#new-roulette-name').val(CURRENT_ROULETE.name);
-    $('#new-roulette-options').val(CURRENT_ROULETE.options); 
+  if (CURRENT_ROULETTE.name) {
+    $('#new-roulette-name').val(CURRENT_ROULETTE.name);
+    $('#new-roulette-options').val(CURRENT_ROULETTE.options); 
     
     showNewRouletteModal();
   } else {
