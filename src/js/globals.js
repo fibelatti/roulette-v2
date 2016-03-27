@@ -1,3 +1,5 @@
+var CURRENT_ROULETE = {};
+
 var SESSION_DATA = {
   "roulettes":[]
 };
