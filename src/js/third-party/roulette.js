@@ -60,6 +60,10 @@
 			if (p.stopImageNumber != null) {
 				p.maxDistance += (p.totalHeight - (p.maxDistance % p.totalHeight) + (p.stopImageNumber * p.imageHeight))
 						% p.totalHeight;
+              
+                if (p.imageCount <= 5) {
+                  p.maxDistance = p.maxDistance * 2;
+                }
 			}
 		}
 

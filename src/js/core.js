@@ -134,6 +134,7 @@ function createRouletteImages () {
     function(){
       $('div.roulette').roulette(ROULETTE_OPTION);
       $('#roulettes-modal').modal('hide');
+      startRoulette();
     }
   );
 }
@@ -167,6 +168,7 @@ function saveRoulette () {
     clearNewRouletteForm();
     resetRouletteDropdown();
     populateRouletteDropdown();
+    fetchRouletteOptionsList(rouletteName);
     
     $('#new-roulette-modal').modal('hide');
     $('#roulettes-modal').modal('show');

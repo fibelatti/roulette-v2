@@ -21,6 +21,7 @@ body{
 }
 .row-modal{
   margin: 20px auto;
+  vertical-align: middle;
 }
 
 .btn-first{
@@ -44,10 +45,10 @@ body{
   border-color: rgb(240, 0, 105);
 }
 .btn-main-content{
-  width: 33.0vmax;
+  width: 180px;
 }
 .btn-modal{
-  width: 21.0vmax;
+  width: 80px;
 }
 .btn-dropdown-roulette{
   width: 100%;
