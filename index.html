@@ -137,32 +137,23 @@
             <div class="modal-body">
               <div class="row row-modal">
                 <div class="col">
-                  <span>Suas roletas são salvas nos cookies do navegador, podendo ser exportadas e importadas no formato json.</span>
-                </div>
-              </div>
-              
-              <hr />
-
-              <div class="row row-modal">
-                <div class="col">
-                  <a id="export-roulette-btn" href="#" class="btn btn-default btn-sm" role="button">Exportar Roletas</a>
+                  <span class="modal-text">Suas roletas são salvas nos cookies do navegador, podendo ser exportadas e importadas no formato json.</span>
                 </div>
               </div>
               
               <hr />
               
               <div class="row row-modal">
-                <div class="col">
-                  <div class="input-group">
-                    <input type="file" accept=".json" class="form-control" id="json-file">
-                    <span class="input-group-btn">
-                      <button id="import-roulette-btn" class="btn btn-default" type="button">Importar</button>
-                    </span>
-                  </div>
-                  <div class="checkbox">
-                    <label><input type="checkbox" id="import-replace-check">Substituir roletas existentes</label>
+                <div class="btn-group" role="group">
+                  <div id="export-roulette-btn" class="btn btn-default imp-exp-btn" role="button">Exportar</div>
+                  <div id="import-roulette-btn" class="btn btn-default imp-exp-btn">
+                      <span>Importar</span>
+                      <input type="file" accept=".json" class="upload" id="json-file">
                   </div>
                 </div>
+                <div class="checkbox">
+                    <label class="modal-text-sm"><input type="checkbox" id="import-replace-check">Marque está opção antes de importar se deseja substituir suas roletas existentes</label>
+                  </div>
               </div>
 
               <hr />

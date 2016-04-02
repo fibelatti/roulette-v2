@@ -16,7 +16,7 @@ $('#choose-another-roulette').on('click', function () {
   $('#roulettes-modal').modal('show');
 });
 
-$('#import-roulette-btn').on('click', function () {
+$('#import-roulette-btn').on('change', function () {
   importRoulettesData();
 });
 

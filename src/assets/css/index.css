@@ -63,6 +63,21 @@ body {
   transform: translate(-50%, 0);
 }
 
+.imp-exp-btn {
+  position: relative;
+  overflow: hidden;
+}
+.imp-exp-btn input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
 div.roulette_container {
   position: relative;
   background-color:#2b2b2b;
