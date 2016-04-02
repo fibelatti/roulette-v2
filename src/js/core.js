@@ -16,8 +16,12 @@ $('#choose-another-roulette').on('click', function () {
   $('#roulettes-modal').modal('show');
 });
 
-$('#import-roulette-btn').on('click', function () {
+$('#import-roulette-btn').on('change', function () {
   importRoulettesData();
+});
+
+$('#btn-toggle-music').on('click', function () {
+  toggleMusic();
 });
 
 // Modal events
@@ -103,7 +107,7 @@ function fetchRouletteOptionsList (rouletteName) {
     $('<a />', {
       id    : 'opt-' + key,
       href  : '#',
-      class : 'list-group-item active',
+      class : 'list-group-item active modal-text',
       text  : value,
       click: function(){ $(this).toggleClass('active'); }
     }).appendTo($('#roulette-options-list'));
@@ -134,6 +138,7 @@ function createRouletteImages () {
     function(){
       $('div.roulette').roulette(ROULETTE_OPTION);
       $('#roulettes-modal').modal('hide');
+      triggerStartRoulette();
     }
   );
 }
@@ -167,6 +172,7 @@ function saveRoulette () {
     clearNewRouletteForm();
     resetRouletteDropdown();
     populateRouletteDropdown();
+    fetchRouletteOptionsList(rouletteName);
     
     $('#new-roulette-modal').modal('hide');
     $('#roulettes-modal').modal('show');

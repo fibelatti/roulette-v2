@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="version"        content="2.2.0" >
+    <meta name="version"        content="2.2.1" >
     <meta name="viewport"       content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
     <meta name="author"         content="Filipe Belatti" />
     <meta name="description"    content="Making decisions easier" />
@@ -61,9 +61,12 @@
               </div>
 
               <div class="row row-modal">
-                <div class="col">
-                  <button id="include-all-btn" type="button" class="btn btn-default btn-sm btn-modal">Marcar Todos</button>
-                  <button id="remove-all-btn" type="button" class="btn btn-default btn-sm btn-modal">Desmarcar Todos</button>
+                <div class="col-xs-3 modal-text">Incluir:</div>
+                <div class="col-xs-9">
+                  <div class="btn-group" role="group">
+                    <button id="include-all-btn" type="button" class="btn btn-default btn-sm btn-modal">Todos</button>
+                    <button id="remove-all-btn" type="button" class="btn btn-default btn-sm btn-modal">Nenhum</button>
+                  </div>
                 </div>
               </div>
 
@@ -100,13 +103,13 @@
                 <div class="col">
                   <form class="form-horizontal" role="form">
                     <div class="form-group">
-                      <label class="col-xs-3 control-label">Nome:</label>
+                      <label class="col-xs-3 control-label modal-text">Nome:</label>
                       <div class="col-xs-9">
                         <input id="new-roulette-name" class="form-control" type="text" value="">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-xs-3 control-label">Opções:</label>
+                      <label class="col-xs-3 control-label modal-text">Opções:</label>
                       <div class="col-xs-9">
                         <textarea id="new-roulette-options" class="form-control" type="text" value="" placeholder="Digite as opções separadas por vírgula"></textarea>
                       </div>
@@ -134,39 +137,30 @@
             <div class="modal-body">
               <div class="row row-modal">
                 <div class="col">
-                  <span>Suas roletas são salvas nos cookies do navegador, podendo ser exportadas e importadas no formato json.</span>
-                </div>
-              </div>
-              
-              <hr />
-
-              <div class="row row-modal">
-                <div class="col">
-                  <a id="export-roulette-btn" href="#" class="btn btn-default btn-sm" role="button">Exportar Roletas</a>
+                  <span class="modal-text">Suas roletas são salvas nos cookies do navegador, podendo ser exportadas e importadas no formato json.</span>
                 </div>
               </div>
               
               <hr />
               
               <div class="row row-modal">
-                <div class="col">
-                  <div class="input-group">
-                    <input type="file" accept=".json" class="form-control" id="json-file">
-                    <span class="input-group-btn">
-                      <button id="import-roulette-btn" class="btn btn-default" type="button">Importar</button>
-                    </span>
-                  </div>
-                  <div class="checkbox">
-                    <label><input type="checkbox" id="import-replace-check">Substituir roletas existentes</label>
+                <div class="btn-group" role="group">
+                  <div id="export-roulette-btn" class="btn btn-default imp-exp-btn" role="button">Exportar</div>
+                  <div id="import-roulette-btn" class="btn btn-default imp-exp-btn">
+                      <span>Importar</span>
+                      <input type="file" accept=".json" class="upload" id="json-file">
                   </div>
                 </div>
+                <div class="checkbox">
+                    <label class="modal-text-sm"><input type="checkbox" id="import-replace-check">Marque está opção antes de importar se deseja substituir suas roletas existentes</label>
+                  </div>
               </div>
 
               <hr />
 
               <div class="row row-modal">
                 <div class="col">
-                  <span>Exemplo</span>
+                  <span class="modal-text">Exemplo</span>
                   <figure class="highlight">
 <pre>
 {
@@ -221,6 +215,9 @@
         </div>
         <div class="col-xs-12">
           <p><a class="btn btn-second btn-lg btn-main-content" href="" id="choose-another-roulette" role="button">Escolher Roleta</a></p>
+        </div>
+        <div class="col-xs-12">
+          <div class="btn btn-second btn-sm" id="btn-toggle-music" role="button"><span class="glyphicon glyphicon-volume-up" aria-hidden="true"></span></div>
         </div>
       </div>
     </div>
