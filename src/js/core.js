@@ -20,6 +20,10 @@ $('#import-roulette-btn').on('change', function () {
   importRoulettesData();
 });
 
+$('#btn-toggle-music').on('click', function () {
+  toggleMusic();
+});
+
 // Modal events
 $('#roulettes-modal-ok').on('click', function () {
   if (checkSetupIsValid()) {
@@ -103,7 +107,7 @@ function fetchRouletteOptionsList (rouletteName) {
     $('<a />', {
       id    : 'opt-' + key,
       href  : '#',
-      class : 'list-group-item active',
+      class : 'list-group-item active modal-text',
       text  : value,
       click: function(){ $(this).toggleClass('active'); }
     }).appendTo($('#roulette-options-list'));
@@ -134,7 +138,7 @@ function createRouletteImages () {
     function(){
       $('div.roulette').roulette(ROULETTE_OPTION);
       $('#roulettes-modal').modal('hide');
-      startRoulette();
+      triggerStartRoulette();
     }
   );
 }

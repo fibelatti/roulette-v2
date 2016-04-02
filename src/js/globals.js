@@ -1,3 +1,9 @@
+var AUDIO           = document.querySelector('audio');
+var START_STOP_BTN  = document.querySelector('#draft');
+
+var ROULETTE_IS_SPINNING = false;
+var MUSIC_IS_PLAYING     = true;
+
 var CURRENT_ROULETTE = {};
 
 var SESSION_DATA = {
@@ -5,7 +11,7 @@ var SESSION_DATA = {
 };
 
 var ROULETTE_OPTION = {
-  speed : 6,
+  speed : 8,
   duration : 30,
   stopImageNumber : -1,
   startCallback : function() {
@@ -16,6 +22,7 @@ var ROULETTE_OPTION = {
   },
   stopCallback : function($stopElm) {
     console.log('stop');
+    onRouletteStop();
   }
 };
 
